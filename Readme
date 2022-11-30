@@ -1,0 +1,31 @@
+---------------------SQL Scripts----------------------------
+CREATE DATABASE phonebook;
+
+CREATE TABLE Contacts(
+    FirstName varchar(50),
+    LastName varchar(50),
+    PhoneNumber varchar(50)
+);
+
+--Some dummy data
+INSERT INTO Contacts (FirstName, LastName, PhoneNumber) VALUES ('JOHN', 'SMITH', '123456789')
+INSERT INTO Contacts (FirstName, LastName, PhoneNumber) VALUES ('ADAM', 'TOWLE', '987654321')
+INSERT INTO Contacts (FirstName, LastName, PhoneNumber) VALUES ('MARY', 'POPPINS', '876234409')
+
+------------------------------------------------------------------------------------------------
+As my company laptop has some restrictions for connecting to localhost, I wasn't able to run the application with actual db connection. 
+But I have done checks with dummy data and unit testing, and I've also added sql script for db and table creation. Please use the above script in your db.
+It will run.
+As I started with HTML, I've done all the front end work with HTML. I had to refresh myself with javascript as it has been around 2 years since I used it.
+
+About the application:
+-----------------------------------------------
+To run the application, please enter db connection string in appsettings.json
+I've used SOLID principles as much as possible and also repository pattern.
+Have used TDD approach.
+Used Moq and AutoFixture for mocking and auto initialisations.
+Used Dapper for SQL Connection.
+Since you asked notes about running the application, just mentioning that application is quite simple and once you run it, it'll be straightforward.
+I've supplied a simple script to connect to the DB as it meets the requirement for this asessment,I would have used fluent migrator and docker to run the scripts in db for
+a production application.
+Haven't done validation since I wanted to finish the asessment on the same evening.
