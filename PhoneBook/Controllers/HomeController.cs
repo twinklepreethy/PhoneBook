@@ -41,7 +41,6 @@ namespace PhoneBook.Controllers
                     Contacts = contactsList.ToList()
                 };
 
-
                 return View(contactModel);
             }
             catch (Exception ex)
