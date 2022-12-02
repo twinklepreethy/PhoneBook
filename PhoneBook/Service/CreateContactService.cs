@@ -6,22 +6,15 @@ namespace PhoneBook.Service
 {
     public class CreateContactService : ICreateContactService
     {
-        private readonly IRepository _repository;
-        public CreateContactService(IRepository repository)
+        private readonly IRepository<Contact> _repository;
+        public CreateContactService(IRepository<Contact> repository)
         {
             _repository = repository;
         }
 
         public async Task CreateContact(ContactCreationDto contactDto)
         {
-            var contact = new Contact
-            {
-                FirstName = contactDto.FirstName.ToUpper(),
-                LastName = contactDto.LastName.ToUpper(),
-                PhoneNumber = contactDto.PhoneNumber
-            };
-
-            await _repository.CreateContact(contact);
+            await _repository.Add(contactDto.ConvertToDBObject);
         }
     }
 }

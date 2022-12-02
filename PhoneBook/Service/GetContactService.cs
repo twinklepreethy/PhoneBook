@@ -6,15 +6,15 @@ namespace PhoneBook.Service
 {
     public class GetContactService : IGetContactService
     {
-        private readonly IRepository _repository;
-        public GetContactService(IRepository repository)
+        private readonly IRepository<Contact> _repository;
+        public GetContactService(IRepository<Contact> repository)
         {
             _repository = repository;
         }
 
         public async Task<ContactCreationDto> GetContact(Guid Id)
         {
-            var contact = await _repository.GetContact(Id);
+            var contact = await _repository.Get("");
 
             var contactCreationDto = new ContactCreationDto
             {

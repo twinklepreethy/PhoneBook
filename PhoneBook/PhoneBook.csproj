@@ -13,4 +13,14 @@
     <PackageReference Include="System.Runtime.Caching" Version="7.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\ViewModel\AddContactViewModel.js" />
+    <None Include="wwwroot\js\ViewModel\IndexViewModel.js" />
+    <None Include="wwwroot\lib\knockout\knockout-3.5.1.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Javascripts\" />
+  </ItemGroup>
+
 </Project>

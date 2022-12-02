@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using PhoneBook.Models.Entities;
+using System.ComponentModel;
 
 namespace PhoneBook.Models.Dtos
 {
@@ -16,6 +17,20 @@ namespace PhoneBook.Models.Dtos
         public string FullName()
         {
             return FirstName + " " + LastName;
+        }
+
+        public Contact ConvertToDBObject
+        {
+            get
+            {
+                return new Contact
+                {
+                    Id = this.Id,
+                    FirstName = this.FirstName.ToUpper(),
+                    LastName = this.LastName.ToUpper(),
+                    PhoneNumber = this.PhoneNumber.ToUpper()
+                };
+            }
         }
     }
 }

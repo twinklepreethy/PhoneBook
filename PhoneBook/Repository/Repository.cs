@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using PhoneBook.Context;
 using PhoneBook.Models.Dtos;
 using PhoneBook.Models.Entities;
@@ -7,7 +8,7 @@ using static Dapper.SqlMapper;
 
 namespace PhoneBook.Repository
 {
-    public class Repository : IRepository
+    public class Repository<T> : IRepository<T> where T : TEntity
     {
         private readonly DapperContext _context;
 
@@ -16,67 +17,86 @@ namespace PhoneBook.Repository
             _context = context;
         }
 
-        public async Task<IEnumerable<Contact>> GetAllContacts()
+        public virtual async Task<T> Add(T entity)
         {
-            var query = "SELECT * FROM Contacts";
-
-            using (var connection = _context.CreateConnection())
+            try
             {
-                var contacts = await connection.QueryAsync<Contact>(query);
-                return contacts.ToList();
+                using var connection = await _context .CreateConnection();
+                var identity = await connection.InsertAsync<T>(entity);
+
+                return identity != -1
+                    ? entity
+                    : default;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error: {ex?.InnerException?.Message ?? ex.Message} \r\n" +
+                                            $"at {typeof(IRepository<T>).Name} \r\n" +
+                                            $"on method: {nameof(Add)} \r\n", ex);
             }
         }
 
-        public async Task<Contact> GetContact(Guid id)
+        public async Task<IEnumerable<T>> GetAll(string query, object parameters = null)
         {
-            var query = "SELECT * FROM Contacts WHERE Id = @Id";
-
-            using (var connection = _context.CreateConnection())
+            try
             {
-                var contact = await connection.QuerySingleOrDefaultAsync<Contact>(query, new { id });
+                using var connection = await _context.CreateConnection();
+                return connection.Query<T>(query, parameters).ToList();
 
-                return contact;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error: {ex?.InnerException?.Message ?? ex.Message} \r\n" +
+                                         $"at {typeof(IRepository<T>).Name} \r\n" +
+                                         $"on method: {nameof(GetAll)} \r\n", ex);
             }
         }
 
-        public async Task CreateContact(Contact contact)
+        public virtual async Task<T> Get(string query, object parameters = null)
         {
-            var query = "INSERT INTO Contacts (FirstName, LastName, PhoneNumber) VALUES (@FirstName, @LastName, @PhoneNumber)";
-
-            var parameters = new DynamicParameters();
-            parameters.Add("FirstName", contact.FirstName, DbType.String);
-            parameters.Add("LastName", contact.LastName, DbType.String);
-            parameters.Add("PhoneNumber", contact.PhoneNumber, DbType.String);
-
-            using (var connection = _context.CreateConnection())
+            try
             {
-                await connection.ExecuteAsync(query, parameters);
+                using var connection = await _context.CreateConnection();
+                return connection.QueryFirstOrDefault<T>(query, parameters);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error: {ex?.InnerException?.Message ?? ex.Message} \r\n" +
+                                         $"at {typeof(IRepository<T>).Name} \r\n" +
+                                         $"on method: {nameof(Get)} \r\n", ex);
             }
         }
 
-        public async Task DeleteContact(Guid id)
+        public virtual async Task<bool> Delete(T entity)
         {
-            var query = "DELETE FROM Contacts WHERE Id = @Id";
-
-            using (var connection = _context.CreateConnection())
+            try
             {
-                await connection.QueryAsync<Contact>(query, new { id });
+                using var connection = await _context.CreateConnection();
+                return await connection.DeleteAsync<T>(entity);
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error: {ex?.InnerException?.Message ?? ex.Message} \r\n" +
+                                         $"at {typeof(IRepository<T>).Name} \r\n" +
+                                         $"on method: {nameof(Get)} \r\n", ex);
             }
         }
 
-        public async Task UpdateContact(Contact contact)
+        public virtual async Task<bool> Update(T entity)
         {
-            var query = "UPDATE Contacts SET FirstName = @FirstName, LastName = @LastName, PhoneNumber = @PhoneNumber WHERE Id = @Id";
-
-            var parameters = new DynamicParameters();
-            parameters.Add("FirstName", contact.FirstName, DbType.String);
-            parameters.Add("LastName", contact.LastName, DbType.String);
-            parameters.Add("PhoneNumber", contact.PhoneNumber, DbType.String);
-            parameters.Add("Id", contact.Id, DbType.Guid);
-
-            using (var connection = _context.CreateConnection())
+            try
             {
-                await connection.ExecuteAsync(query, parameters);
+                using var connection = await _context.CreateConnection();
+                return await connection.UpdateAsync<T>(entity);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error: {ex?.InnerException?.Message ?? ex.Message} \r\n" +
+                                            $"at {typeof(IRepository<T>).Name} \r\n" +
+                                            $"on method: {nameof(Update)} \r\n", ex);
             }
         }
     }

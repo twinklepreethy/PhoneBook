@@ -1,6 +1,9 @@
+using Dapper.Contrib.Extensions;
+
 namespace PhoneBook.Models.Entities
 {
-    public class Contact : Base
+    [Table("Contacts")]
+    public class Contact : TEntity
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

@@ -1,7 +1,9 @@
-﻿namespace PhoneBook.Service
+﻿using PhoneBook.Models.Dtos;
+
+namespace PhoneBook.Service
 {
     public interface IDeleteContactService
     {
-        Task DeleteContact(Guid Id);
+        Task DeleteContact(ContactCreationDto contactCreationDto);
     }
 }

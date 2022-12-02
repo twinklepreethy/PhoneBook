@@ -6,15 +6,15 @@ namespace PhoneBook.Service
 {
     public class DeleteContactService : IDeleteContactService
     {
-        private readonly IRepository _repository;
-        public DeleteContactService(IRepository repository)
+        private readonly IRepository<Contact> _repository;
+        public DeleteContactService(IRepository<Contact> repository)
         {
             _repository = repository;
         }
 
-        public async Task DeleteContact(Guid Id)
+        public async Task DeleteContact(ContactCreationDto contactCreationDto)
         {
-            await _repository.DeleteContact(Id);
+            await _repository.Delete(contactCreationDto.ConvertToDBObject);
         }
     }
 }

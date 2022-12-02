@@ -1,6 +1,6 @@
 ﻿namespace PhoneBook.Models.Entities
 {
-    public class Base
+    public abstract class TEntity
     {
         public Guid Id { get; set; }
     }

@@ -10,8 +10,8 @@ namespace PhoneBook.Service
 {
     public class GetAllContactsService : IGetAllContactsService
     {
-        private readonly IRepository _repository;
-        public GetAllContactsService(IRepository repository)
+        private readonly IRepository<Contact> _repository;
+        public GetAllContactsService(IRepository<Contact> repository)
         {
             _repository = repository;
         }
@@ -19,7 +19,7 @@ namespace PhoneBook.Service
         public async Task<IEnumerable<ContactCreationDto>> GetAllContacts()
         {
             var contactCreationDtoList = new List<ContactCreationDto>();
-            var contactsList = await _repository.GetAllContacts();
+            var contactsList = await _repository.GetAll("");
             foreach (var contact in contactsList)
             {
                 contactCreationDtoList.Add(new ContactCreationDto

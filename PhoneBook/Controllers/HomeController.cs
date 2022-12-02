@@ -35,10 +35,18 @@ namespace PhoneBook.Controllers
         {
             try
             {
-                var contactsList = await _getAllContactsService.GetAllContacts();
+                //var contactsList = await _getAllContactsService.GetAllContacts();
                 var contactModel = new ContactListModel
                 {
-                    Contacts = contactsList.ToList()
+                    Contacts = new List<ContactCreationDto>
+                    {
+                        new ContactCreationDto
+                        {
+                            FirstName = "tt",
+                            LastName = "gg",
+                            PhoneNumber = "ff"
+                        }
+                    }//contactsList.ToList()
                 };
 
                 return View(contactModel);
@@ -110,7 +118,7 @@ namespace PhoneBook.Controllers
         {
             try
             {
-                await _deleteContactService.DeleteContact(contact.CurrentContactId);
+                await _deleteContactService.DeleteContact(new ContactCreationDto()); //get this in js
 
                 var contactsList = await _getAllContactsService.GetAllContacts();
 

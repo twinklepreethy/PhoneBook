@@ -25,22 +25,22 @@
             <tr>
                 <td class="col-sm-2" style="text-align:center">@contact.FullName()</td>
                 <td class="col-sm-2" style="text-align:center">@contact.PhoneNumber</td>
-                <td class="col-sm-2" style="text-align:center">
-                    @using (Html.BeginForm("UpdateContact", "Home", FormMethod.Post))
+                <td class="col-sm-2" style="text-align:center" data-bind="text: firstName">
+                   @* @using (Html.BeginForm("UpdateContact", "Home", FormMethod.Post))
                     {
                         Model.CurrentContactId = contact.Id;
                         @Html.HiddenFor(m => m.CurrentContactId)
                         <input type='submit' value="Edit" class="btn btn-default" style="text-decoration:underline" />
-                    }
+                    }*@
                 </td>
                 <td class="col-sm-2" style="text-align:center">
-                    @using (Html.BeginForm("DeleteContact", "Home", FormMethod.Post))
+                    @*@using (Html.BeginForm("DeleteContact", "Home", FormMethod.Post))
                     {
                         Model.CurrentContactId = contact.Id;
                         @Html.HiddenFor(m => m.CurrentContactId)
 
                         <input type='submit' value="Delete" class="btn btn-default" style="text-decoration:underline" />
-                    }
+                    }*@
                 </td>
             </tr>
         }
@@ -49,10 +49,12 @@
     <br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            @using (Html.BeginForm("AddContact", "Home", FormMethod.Get))
+            @*@using (Html.BeginForm("AddContact", "Home", FormMethod.Get))
             {
                 <input type='submit' value="Add Contact" class="btn btn-primary" />
-            }
+            }*@
         </div>
     </div>
 </div>
+
+<script src="~/js/viewmodel/indexviewmodel.js"></script>

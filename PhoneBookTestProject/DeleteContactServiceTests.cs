@@ -16,7 +16,7 @@ namespace PhoneBookTestProject
     public class DeleteContactServiceTests
     {
         private readonly IDeleteContactService _sut;
-        private readonly Mock<IRepository> _mockRepository = new();
+        private readonly Mock<IRepository<Contact>> _mockRepository = new();
         private readonly Fixture _fixture = new();
 
         public DeleteContactServiceTests()
@@ -28,12 +28,12 @@ namespace PhoneBookTestProject
         public void DeleteContact_HappyPath()
         {
             Guid id = Guid.Empty;
-            _mockRepository.Setup(x => x.DeleteContact(It.IsAny<Guid>())).Callback((Guid contactId) =>
+            _mockRepository.Setup(x => x.Delete(It.IsAny<Contact>())).Callback((Guid contactId) =>
             {
                 id = Guid.NewGuid();
             });
 
-            _sut.DeleteContact(id);
+            _sut.DeleteContact(new ContactCreationDto());
 
             Assert.NotEqual(Guid.Empty, id);
         }

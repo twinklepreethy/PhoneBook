@@ -11,10 +11,10 @@ namespace PhoneBook.Context
         public DapperContext(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connectionString = _configuration.GetConnectionString("SqlConnection");
+            _connectionString = _configuration.GetConnectionString("SqlConnection"); //move this to program.cs
         }
 
-        public IDbConnection CreateConnection()
+        public async Task<IDbConnection> CreateConnection()
             => new SqlConnection(_connectionString);
     }
 }

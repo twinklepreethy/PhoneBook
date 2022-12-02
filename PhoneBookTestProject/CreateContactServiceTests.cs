@@ -11,7 +11,7 @@ namespace PhoneBookTestProject
     public class CreateContactServiceTests
     {
         private readonly ICreateContactService _sut;
-        private readonly Mock<IRepository> _mockRepository = new();
+        private readonly Mock<IRepository<Contact>> _mockRepository = new();
         private readonly Fixture _fixture = new();
 
         public CreateContactServiceTests()
@@ -26,7 +26,7 @@ namespace PhoneBookTestProject
             var contactDto = _fixture.Build<ContactCreationDto>()
                                      .With(x => x.Id, id).Create();
 
-            _mockRepository.Setup(x => x.CreateContact(It.IsAny<Contact>())).Callback((Contact contact) =>
+            _mockRepository.Setup(x => x.Add(It.IsAny<Contact>())).Callback((Contact contact) =>
             {
                 contactDto.LastName = contact.LastName;
                 contactDto.FirstName = contact.FirstName;
@@ -44,7 +44,7 @@ namespace PhoneBookTestProject
         {
             ContactCreationDto contactDto = null;
 
-            _mockRepository.Setup(x => x.CreateContact(It.IsAny<Contact>()));
+            _mockRepository.Setup(x => x.Add(It.IsAny<Contact>()));
 
             Assert.ThrowsAsync<TargetInvocationException>(() => _sut.CreateContact(contactDto));
         }

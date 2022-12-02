@@ -16,7 +16,7 @@ namespace PhoneBookTestProject
     public class GetContactServiceTests
     {
         private readonly IGetContactService _sut;
-        private readonly Mock<IRepository> _mockRepository = new();
+        private readonly Mock<IRepository<Contact>> _mockRepository = new();
         private readonly Fixture _fixture = new();
 
         public GetContactServiceTests()
@@ -28,7 +28,7 @@ namespace PhoneBookTestProject
         public void GetContact_ContactFromDB_NotNull_HappyPath()
         {
             var contact = _fixture.Build<Contact>().Create();
-            _mockRepository.Setup(x => x.GetContact(It.IsAny<Guid>())).ReturnsAsync(contact);
+            _mockRepository.Setup(x => x.Get(It.IsAny<string>(), null)).ReturnsAsync(contact);
 
             var result = _sut.GetContact(It.IsAny<Guid>());
 
@@ -41,7 +41,7 @@ namespace PhoneBookTestProject
         {
             Contact contact = null;
 
-            _mockRepository.Setup(x => x.GetContact(It.IsAny<Guid>())).ReturnsAsync(contact);
+            _mockRepository.Setup(x => x.Get(It.IsAny<string>(), null)).ReturnsAsync(contact);
 
             Assert.ThrowsAsync<TargetInvocationException>(() => _sut.GetContact(It.IsAny<Guid>()));
         }

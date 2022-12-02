@@ -16,7 +16,7 @@ namespace PhoneBookTestProject
     public class GetAllContactsServiceTests
     {
         private readonly IGetAllContactsService _sut;
-        private readonly Mock<IRepository> _mockRepository = new();
+        private readonly Mock<IRepository<Contact>> _mockRepository = new();
         private readonly Fixture _fixture = new();
 
         public GetAllContactsServiceTests()
@@ -32,7 +32,7 @@ namespace PhoneBookTestProject
             var contact3 = _fixture.Build<Contact>().Create();
             var contactCreationDtoList = new List<Contact> { contact1, contact2, contact3 };
 
-            _mockRepository.Setup(x => x.GetAllContacts()).ReturnsAsync(contactCreationDtoList);
+            _mockRepository.Setup(x => x.GetAll(It.IsAny<string>(), null)).ReturnsAsync(contactCreationDtoList);
 
             var result = _sut.GetAllContacts();
 

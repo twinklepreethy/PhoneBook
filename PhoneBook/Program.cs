@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Connections;
 using PhoneBook.Context;
+using PhoneBook.Models.Entities;
 using PhoneBook.Repository;
 using PhoneBook.Service;
 using System.Runtime.CompilerServices;
@@ -7,8 +8,8 @@ using System.Runtime.CompilerServices;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<IRepository, Repository>();
-builder.Services.AddSingleton<IRepository, Repository>();
+builder.Services.AddScoped<IRepository<Contact>, Repository<Contact>>();
+builder.Services.AddSingleton<IRepository<Contact>, Repository<Contact>>();
 builder.Services.AddSingleton<ICreateContactService, CreateContactService>();
 builder.Services.AddSingleton<IGetContactService, GetContactService>();
 builder.Services.AddSingleton<IGetAllContactsService, GetAllContactsService>();
