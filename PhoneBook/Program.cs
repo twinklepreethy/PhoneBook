@@ -4,6 +4,7 @@ using PhoneBook.Models.Entities;
 using PhoneBook.Repository;
 using PhoneBook.Service;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,5 +40,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 app.Run();

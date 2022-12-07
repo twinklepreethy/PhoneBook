@@ -1,60 +1,25 @@
-﻿@model ContactListModel
-
-@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div>
-    @using (Html.BeginForm("FilteredList", "Home", FormMethod.Post))
-    {
-        @Html.TextBoxFor(m => m.SearchString, new { placeholder = "Search contact by last name", @style = "width:25%" })
-        <input type='submit' value="Search" class="btn btn-dark" />
-    }
-</div>
-<br />
-<div class="form-horizontal">
+﻿<div class="form-horizontal" data-selector="IndexPage">
+    <div>
+        <input placeholder="Search contact by last name" data-selector="SearchInput" style="width:25%" />
+    </div>
+    <br />
     <h4>Contacts</h4>
     <hr />
-    
-    <table>
-        @{
-            var count = 0;
-        }
-        @foreach (var contact in Model.Contacts)
-        {
-            <tr>
-                <td class="col-sm-2" style="text-align:center">@contact.FullName()</td>
-                <td class="col-sm-2" style="text-align:center">@contact.PhoneNumber</td>
-                <td class="col-sm-2" style="text-align:center" data-bind="text: firstName">
-                   @* @using (Html.BeginForm("UpdateContact", "Home", FormMethod.Post))
-                    {
-                        Model.CurrentContactId = contact.Id;
-                        @Html.HiddenFor(m => m.CurrentContactId)
-                        <input type='submit' value="Edit" class="btn btn-default" style="text-decoration:underline" />
-                    }*@
-                </td>
-                <td class="col-sm-2" style="text-align:center">
-                    @*@using (Html.BeginForm("DeleteContact", "Home", FormMethod.Post))
-                    {
-                        Model.CurrentContactId = contact.Id;
-                        @Html.HiddenFor(m => m.CurrentContactId)
 
-                        <input type='submit' value="Delete" class="btn btn-default" style="text-decoration:underline" />
-                    }*@
-                </td>
-            </tr>
-        }
-    </table>
+    <p data-selector="NoContactsError" style="display:none"  >
+        No users found, please change search criteria...
+    </p>
+    <table data-selector="ContactsTable"></table>
 
     <br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            @*@using (Html.BeginForm("AddContact", "Home", FormMethod.Get))
-            {
-                <input type='submit' value="Add Contact" class="btn btn-primary" />
-            }*@
+            <input type='button' value="Add Contact" class="btn btn-primary" data-selector="AddContact" />
         </div>
     </div>
 </div>
 
-<script src="~/js/viewmodel/indexviewmodel.js"></script>
+<div id="AddContact"></div>
+
+<script src="~/js/jQueryScripts/Index.js"></script>
+@*<script src="~/js/viewmodel/indexviewmodel.js"></script>*@

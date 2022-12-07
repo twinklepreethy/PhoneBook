@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Javascripts\**" />
+    <Content Remove="Javascripts\**" />
+    <EmbeddedResource Remove="Javascripts\**" />
+    <None Remove="Javascripts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.0.123" />
     <PackageReference Include="Dapper.Contrib" Version="2.0.78" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
@@ -17,10 +24,6 @@
     <None Include="wwwroot\js\ViewModel\AddContactViewModel.js" />
     <None Include="wwwroot\js\ViewModel\IndexViewModel.js" />
     <None Include="wwwroot\lib\knockout\knockout-3.5.1.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Javascripts\" />
   </ItemGroup>
 
 </Project>

@@ -36,20 +36,20 @@ namespace PhoneBook.Controllers
             try
             {
                 //var contactsList = await _getAllContactsService.GetAllContacts();
-                var contactModel = new ContactListModel
-                {
-                    Contacts = new List<ContactCreationDto>
-                    {
-                        new ContactCreationDto
-                        {
-                            FirstName = "tt",
-                            LastName = "gg",
-                            PhoneNumber = "ff"
-                        }
-                    }//contactsList.ToList()
-                };
+                //var contactModel = new ContactListModel
+                //{
+                //    Contacts = new List<ContactCreationDto>
+                //    {
+                //        new ContactCreationDto
+                //        {
+                //            FirstName = "tt",
+                //            LastName = "gg",
+                //            PhoneNumber = "ff"
+                //        }
+                //    }//contactsList.ToList()
+                //};
 
-                return View(contactModel);
+                return View();
             }
             catch (Exception ex)
             {
@@ -70,16 +70,18 @@ namespace PhoneBook.Controllers
 
         public async Task<IActionResult> AddContact()
         {
-            return View();
+            return PartialView("_AddContact");
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdateContact(ContactListModel contactModel)
+        public async Task<IActionResult> UpdateContact(Guid currentContactID)
         {
-            var contactCreationDto = await _getContactService.GetContact(contactModel.CurrentContactId);
-            contactCreationDto.IsUpdate = true;
-            contactCreationDto.Id = contactModel.CurrentContactId;
-            return View("AddContact", contactCreationDto);
+            var contactCreationDto = new ContactCreationDto
+            {
+                Id = currentContactID
+            };
+
+            return PartialView("_AddContact", contactCreationDto);
         }
 
         [HttpPost]

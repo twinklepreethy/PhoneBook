@@ -1,0 +1,39 @@
+﻿@using PhoneBook.Models.Dtos;
+@model ContactCreationDto
+
+<div class="form-horizontal" data-selector="AddContactPage">
+    <h4>Contact</h4>
+    <hr />
+
+    <div class="form-group">
+        <label class="control-label col-md-2">First Name</label>
+        <div class="col-md-5">
+            <input data-selector="FirstName" class="form-control" />
+        </div>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Last Name</label>
+        <div class="col-md-5">
+            <input data-selector="LastName" class="form-control" />
+        </div>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Phone Number</label>
+        <div class="col-md-5">
+            <input data-selector="PhoneNumber" class="form-control" />
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type='submit' value="Create Contact" class="btn btn-primary" data-selector="CreateContact" />
+                <button data-selector="CancelContact" class="btn btn-primary">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="~/js/jqueryscripts/addcontact.js"></script>
